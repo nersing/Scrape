@@ -39,7 +39,7 @@ app.use(express.static("public"));
 
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/scrapeHomework", {
+mongoose.connect(MONGODB_URI || "mongodb://localhost/scrapeHomework", {
   useMongoClient: true
 });
 
