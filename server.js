@@ -43,6 +43,8 @@ mongoose.connect("mongodb://localhost/scrapeHomework", {
   useMongoClient: true
 });
 
+ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
 // Routes
 
 // A GET route for scraping the chicago tribune website
