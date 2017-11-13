@@ -35,17 +35,11 @@ app.use(express.static("public"));
 
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-// mongoose.connect("mongodb://localhost/scrapeHomework", {
-//   useMongoClient: true
-// });
 
-// mongoose.connect('mongodb://heroku_1wb22hrl:fs7rf0nusriq127381j5nsslvd@ds255715.mlab.com:55715/heroku_1wb22hrl')
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeHomework";
 mongoose.connect(MONGODB_URI,{
    useMongoClient: true } )
-
-
 
 
 
