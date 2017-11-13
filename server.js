@@ -18,11 +18,6 @@ var PORT = 3000;
 // Initialize Express
 var app = express();
 
-// set up the HBS view engine
-// app.engine('hbs', hbs({defaultLayout: 'main', extname: 'hbs', partialsDir: [__dirname + '/views/partials']}));
-// app.set('view engine', 'hbs');
-
-
 
 // Use morgan logger for logging requests
 app.use(logger("dev"));
@@ -40,14 +35,15 @@ app.use(express.static("public"));
 
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://heroku_1wb22hrl:fs7rf0nusriq127381j5nsslvd@ds255715.mlab.com:55715/heroku_1wb22hrl', {
-  useMongoClient: true
-});
+// mongoose.connect("mongodb://localhost/scrapeHomework", {
+//   useMongoClient: true
+// });
+
+mongoose.connect('mongodb://heroku_1wb22hrl:fs7rf0nusriq127381j5nsslvd@ds255715.mlab.com:55715/heroku_1wb22hrl')
+
+var database = mongoose.connection
 
 
-
-
-// "mongodb://localhost/scrapeHomework"
 
 
 // Routes
