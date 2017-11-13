@@ -39,14 +39,20 @@ mongoose.Promise = Promise;
 //   useMongoClient: true
 // });
 
-mongoose.connect('mongodb://heroku_1wb22hrl:fs7rf0nusriq127381j5nsslvd@ds255715.mlab.com:55715/heroku_1wb22hrl')
+// mongoose.connect('mongodb://heroku_1wb22hrl:fs7rf0nusriq127381j5nsslvd@ds255715.mlab.com:55715/heroku_1wb22hrl')
 
-var database = mongoose.connection
 
-database.once("open", function() 
-{
-  console.log("Mongoose connection successful!");
-});
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeHomework";
+mongoose.connect(MONGODB_URI,{
+   useMongoClient: true } )
+
+// var database = mongoose.connection
+
+// database.once("open", function() 
+// {
+//   console.log("Mongoose connection successful!");
+// });
 
 
 
@@ -60,7 +66,7 @@ app.get("/scrape", function(req, res) {
    
     var $ = cheerio.load(response.data);
     
-    $("article h2", "article p").each(function(i, element) {
+    $("article h2").each(function(i, element) {
       
       var result = {};
 
@@ -70,10 +76,10 @@ app.get("/scrape", function(req, res) {
       result.link = $(this)
         .children("a")
         .attr("href");
-       result.summary = $(this)
-       .children("a")
-       .text();
-       result.note = $(this)
+       // result.summary = $(this)
+       // .children("a")
+       // .text();
+       // result.note = $(this)
 
 
       // Create a new Article using the `result` object built from scraping
@@ -81,7 +87,7 @@ app.get("/scrape", function(req, res) {
         .create(result)
         .then(function(dbArticle) {
        
-          res.send(dbArticle);
+          res.send("scrape complete");
           
         })
         .catch(function(err) {
@@ -133,7 +139,7 @@ app.post("/note/:id", function(req, res){
 			{new: true}
 			)
 	}).then(function(dbNotes){
-		res.send(dbNotes)
+		res.send(dbNotes.note)
 	}).catch(function(err){
 		res.json(err)
 	})
@@ -146,11 +152,6 @@ app.post("/deleteNote/:id", function(req, res){
 		res.send(err)
 	})
 })
-
-
-
-
-
 
 
 // Start the server
