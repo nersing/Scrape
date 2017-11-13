@@ -43,6 +43,11 @@ mongoose.connect('mongodb://heroku_1wb22hrl:fs7rf0nusriq127381j5nsslvd@ds255715.
 
 var database = mongoose.connection
 
+database.once("open", function() 
+{
+  console.log("Mongoose connection successful!");
+});
+
 
 
 
