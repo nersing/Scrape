@@ -48,13 +48,14 @@
       <div class ='row'>
           <div class="card blue-grey darken-1" id="card">
             <div class="card-content white-text">
+              <span class="card-title"></span>
       
               <div id="article"></div>
               <div id="note"></div>
             </div>
 
             <div class="card-action">
-              <a href="#noteModal" id="noteButton"></a>
+              <a href="#noteModal" id="note"></a>
             </div>
           </div>
       </div>
@@ -67,13 +68,13 @@
 
     <div class="modal-content">
         <p>Notes</p>
-        <ul class="messages collection"></ul>
+        <ul class="messages-collection"></ul>
     </div>
     
     <div class="modal-footer">
         <form name="noteForm" id="noteForm">
                     <input required placeholder="Enter a note here" type="text" name="noteText" id="noteText">
-            <button class="btn indigo left" type="submit" id="noteButton">
+            <button class="btn indigo left" type="submit" href="/" id="noteButton">
                 Post Your Thoughts!
             </button>
             <a href="/" class="modal-action modal-close waves-effect waves-light btn-flat">Close</a>

@@ -28,6 +28,7 @@ var app = express();
 app.use(logger("dev"));
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
 
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
@@ -39,11 +40,15 @@ app.use(express.static("public"));
 
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI || "mongodb://localhost/scrapeHomework", {
+mongoose.connect('mongodb://heroku_1wb22hrl:fs7rf0nusriq127381j5nsslvd@ds255715.mlab.com:55715/heroku_1wb22hrl', {
   useMongoClient: true
 });
 
- var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeHomework";
+
+
+
+// "mongodb://localhost/scrapeHomework"
+
 
 // Routes
 
@@ -54,7 +59,7 @@ app.get("/scrape", function(req, res) {
    
     var $ = cheerio.load(response.data);
     
-    $("article h2").each(function(i, element) {
+    $("article h2", "article p").each(function(i, element) {
       
       var result = {};
 
@@ -64,6 +69,11 @@ app.get("/scrape", function(req, res) {
       result.link = $(this)
         .children("a")
         .attr("href");
+       result.summary = $(this)
+       .children("a")
+       .text();
+       result.note = $(this)
+
 
       // Create a new Article using the `result` object built from scraping
       db.Article
@@ -87,6 +97,7 @@ app.get("/articles", function(req, res) {
 
   db.Article
   .find({})
+  .sort({_id: -1})
   .then(function(dbArticle){
     res.json(dbArticle)
   })
@@ -117,7 +128,7 @@ app.post("/note/:id", function(req, res){
 	.then(function(dbNotes){
 		return db.Article.findOneAndUpdate(
 			{_id: req.params.id},
-			{$set:{note: dbNotes._id} } ,
+			{$push:{note: dbNotes._id} } ,
 			{new: true}
 			)
 	}).then(function(dbNotes){
