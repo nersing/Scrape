@@ -31,17 +31,21 @@ $("#noteModal").modal({
 
 })
 
-
-
 $("#note").on("click", function(){
 
 	$("#noteModal").modal('open');
 	$(".messages").show();
 
+$.get("/note/:id", function(data){
+	var thisId = $(this).attr("data-id");
+
+
+	$(".messages").append(data.note)
+})
 
 	// noteShow.stopImmediatePropagation();
 
-	var thisId = $(this).attr("data-id");
+	
 
 	
 

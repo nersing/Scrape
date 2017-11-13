@@ -13,7 +13,7 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 // Initialize Express
 var app = express();
@@ -41,18 +41,10 @@ mongoose.Promise = Promise;
 
 // mongoose.connect('mongodb://heroku_1wb22hrl:fs7rf0nusriq127381j5nsslvd@ds255715.mlab.com:55715/heroku_1wb22hrl')
 
-
-
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeHomework";
 mongoose.connect(MONGODB_URI,{
    useMongoClient: true } )
 
-// var database = mongoose.connection
-
-// database.once("open", function() 
-// {
-//   console.log("Mongoose connection successful!");
-// });
 
 
 
